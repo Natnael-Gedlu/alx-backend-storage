@@ -8,6 +8,7 @@ from functools import wraps
 from typing import Callable, Union
 import redis
 
+
 def count_calls(method: Callable) -> Callable:
     """
     Decorator to count calls to a method.
@@ -22,6 +23,7 @@ def count_calls(method: Callable) -> Callable:
         self._redis.incr(key)
         return method(self, *args, **kwargs)
     return wrapper
+
 
 def call_history(method: Callable) -> Callable:
     """
@@ -43,6 +45,7 @@ def call_history(method: Callable) -> Callable:
         return output
 
     return wrapper
+
 
 def replay(fn: Callable):
     """
@@ -72,6 +75,7 @@ def replay(fn: Callable):
 
         print(f'{f_name}(*{i}) -> {o}')
 
+
 class Cache():
     """
     Cache class using Redis.
@@ -91,7 +95,8 @@ class Cache():
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Callable = None) -> Union[str, bytes, int, float]:
+    def get(self, key: str,
+            fn: Callable = None) -> Union[str, bytes, int, float]:
         """
         Retrieve data from Redis.
         """
